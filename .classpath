@@ -6,14 +6,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/furkan/Documents/Bachlor/Projects/jars/bcprov-jdk15on-165.jar"/>
-	<classpathentry kind="lib" path="/Users/furkan/Documents/Bachlor/Projects/jars/CryptoAnalysis-2.7.1-SNAPSHOT-jar-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.cognicrypt.codegenerator_1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.cognicrypt.core_1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.cognicrypt.crysl.handler_1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.cognicrypt.staticanalyzer_1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.darmstadt.tu.crossing.CrySL_2.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.darmstadt.tu.crossing.CrySL.ide_2.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/de.darmstadt.tu.crossing.CrySL.ui_2.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/CryptoAnalysis-2.7.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.cognicrypt.codegenerator_1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.cognicrypt.core_1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.cognicrypt.crysl.handler_1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.cognicrypt.staticanalyzer_1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.darmstadt.tu.crossing.CrySL.ide_2.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.darmstadt.tu.crossing.CrySL.ui_2.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/cygwin64/home/furka/rootDev/Thesis/res/lib/de.darmstadt.tu.crossing.CrySL_2.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
