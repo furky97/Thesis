@@ -1,7 +1,12 @@
 package thesis.main;
 
+import java.util.ArrayList;
+
+import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLRule;
+import fj.data.List;
 import thesis.helpers.Counter;
+import thesis.helpers.RuleReader;
 
 
 public class Main {
@@ -10,15 +15,20 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		Counter c = new Counter("BouncyCastle-JCA", CRYPTO_API_1 + "/tmp");
-		Counter c2 = new Counter("BouncyCastle", CRYPTO_API_2);
+		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_1 + "/tmp");
+		CrySLRule rule = rules.get(0);
+		Counter c = new Counter(rule);
 		
 //		System.out.println("Amount of Rules for BouncyCastle-JCA: " + c.getRules().size());
 //		System.out.println(c.getOccurences());
 		
-		CrySLRule r = c.getRules().get(0);
 		System.out.println("Number of total Methods: " + c.getNumberOfMethods());
 		System.out.println("Number of total Parameters: " + c.getNumberOfParameters());
+		System.out.println("Average Parameter/Method: " + c.paramPerMethod());
+		
+//		System.out.println("Constraints: " + c.getValueConstrasints());
+		System.out.println("Constraints: " + rule.getPredicates());
+//		System.out.println("Constraints: " + c.getArithmeticConstraints());
 	
 	}
 
