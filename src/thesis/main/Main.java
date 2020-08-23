@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLRule;
+import crypto.rules.CrySLValueConstraint;
 import fj.data.List;
 import thesis.helpers.Counter;
 import thesis.helpers.RuleReader;
@@ -26,9 +27,12 @@ public class Main {
 		System.out.println("Number of total Parameters: " + c.getNumberOfParameters());
 		System.out.println("Average Parameter/Method: " + c.paramPerMethod());
 		
-//		System.out.println("Constraints: " + c.getValueConstrasints());
-		System.out.println("Constraints: " + rule.getPredicates());
-//		System.out.println("Constraints: " + c.getArithmeticConstraints());
+		System.out.println("Constraints: " + c.getValueConstraints());
+//		System.out.println("Constraints: " + rule.getPredicates());
+//		System.out.println("Constraints: " + ((CrySLValueConstraint)((CrySLConstraint) rule.getConstraints().get(4)).getRight()).getValueRange());
+		System.out.println("Constraints: " + c.getArithmeticConstraints());
+		System.out.println("Constraints: " + c.getComparisonConstraints());
+		System.out.println("Constraints: " + ((CrySLValueConstraint) c.getNormalConstraints().get(2).getRight()).getValueRange());
 	
 	}
 

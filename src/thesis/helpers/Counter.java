@@ -28,11 +28,8 @@ public class Counter {
 	private CrySLRule rule;
 	private ArrayList<Integer> numberOfParameters;
 	private HashSet<CrySLMethod> methods;
+	private ConstraintParser constraintParser;
 
-	private ArrayList<CrySLConstraint> normalConstraints;
-	private ArrayList<CrySLArithmeticConstraint> arithmeticConstraints;
-	private ArrayList<CrySLValueConstraint> valueConstrasints;
-	private ArrayList<CrySLComparisonConstraint> comparisonConstrains;
 
 	private ArrayList<CrySLForbiddenMethod> forbiddenMethods;
 
@@ -45,14 +42,9 @@ public class Counter {
 	 */
 	public Counter(CrySLRule rule) throws MalformedURLException, CoreException {
 		this.rule = rule;
-		this.normalConstraints = new ArrayList<CrySLConstraint>();
-		this.arithmeticConstraints = new ArrayList<CrySLArithmeticConstraint>();
-		this.valueConstrasints = new ArrayList<CrySLValueConstraint>();
-		this.comparisonConstrains = new ArrayList<CrySLComparisonConstraint>();
-
+		this.constraintParser = new ConstraintParser(rule);
 		this.parseMethods();
 		this.parseNumberOfParameters();
-		this.parseConstraints();
 		this.parseForbiddenMethods();
 	}
 
@@ -106,22 +98,6 @@ public class Counter {
 		this.methods = set;
 	}
 
-	/**
-	 * parses constraints of any given type and fills respective lists
-	 */
-	public void parseConstraints() {
-		for (ISLConstraint islConstraint : rule.getConstraints()) {
-			if (islConstraint instanceof CrySLConstraint) {
-				this.normalConstraints.add((CrySLConstraint) islConstraint);
-			} else if (islConstraint instanceof CrySLComparisonConstraint) {
-				this.comparisonConstrains.add((CrySLComparisonConstraint) islConstraint);
-			} else if (islConstraint instanceof CrySLValueConstraint) {
-				this.valueConstrasints.add((CrySLValueConstraint) islConstraint);
-			} else if (islConstraint instanceof CrySLArithmeticConstraint) {
-				this.arithmeticConstraints.add((CrySLArithmeticConstraint) islConstraint);
-			}
-		}
-	}
 
 	/**
 	 * parse Forbidden Methods
@@ -145,22 +121,6 @@ public class Counter {
 
 	public int paramPerMethod() {
 		return this.numberOfParameters.stream().mapToInt(Integer::intValue).sum() / this.numberOfParameters.size();
-	}
-
-	public ArrayList<CrySLConstraint> getNormalConstraints() {
-		return normalConstraints;
-	}
-
-	public ArrayList<CrySLArithmeticConstraint> getArithmeticConstraints() {
-		return arithmeticConstraints;
-	}
-
-	public ArrayList<CrySLValueConstraint> getValueConstrasints() {
-		return valueConstrasints;
-	}
-
-	public ArrayList<CrySLComparisonConstraint> getComparisonConstrains() {
-		return comparisonConstrains;
 	}
 
 	public ArrayList<CrySLForbiddenMethod> getForbiddenMethods() {
