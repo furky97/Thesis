@@ -126,4 +126,8 @@ public class Counter {
 	public ArrayList<CrySLForbiddenMethod> getForbiddenMethods() {
 		return forbiddenMethods;
 	}
+	
+	public ConstraintParser getConstraintParser() {
+		return this.constraintParser;
+	}
 }

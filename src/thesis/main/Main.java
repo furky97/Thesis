@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLRule;
-import crypto.rules.CrySLValueConstraint;
-import fj.data.List;
 import thesis.helpers.Counter;
 import thesis.helpers.RuleReader;
 
@@ -24,16 +22,21 @@ public class Main {
 //		System.out.println(c.getOccurences());
 		
 		System.out.println("Number of total Methods: " + c.getNumberOfMethods());
+		System.out.println("Number of total Constraints: " + c.getConstraintParser().getNumber());
 		System.out.println("Number of total Parameters: " + c.getNumberOfParameters());
 		System.out.println("Average Parameter/Method: " + c.paramPerMethod());
+		System.out.println();
 		
-		System.out.println("Constraints: " + c.getValueConstraints());
-//		System.out.println("Constraints: " + rule.getPredicates());
-//		System.out.println("Constraints: " + ((CrySLValueConstraint)((CrySLConstraint) rule.getConstraints().get(4)).getRight()).getValueRange());
-		System.out.println("Constraints: " + c.getArithmeticConstraints());
-		System.out.println("Constraints: " + c.getComparisonConstraints());
-		System.out.println("Constraints: " + ((CrySLValueConstraint) c.getNormalConstraints().get(2).getRight()).getValueRange());
-	
+		for (CrySLConstraint cons: c.getConstraintParser().getNormalConstraints().subList(0,1)) {
+			System.out.println(cons);
+			c.getConstraintParser().extractClasses(cons);
+			System.out.println("======================================");
+		}
+		
+		
+		
+		
+		
 	}
 
 }

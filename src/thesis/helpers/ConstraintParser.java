@@ -21,6 +21,7 @@ public class ConstraintParser {
 	private ArrayList<CrySLArithmeticConstraint> arithmeticConstraints;
 	private ArrayList<CrySLValueConstraint> valueConstraints;
 	private ArrayList<CrySLComparisonConstraint> comparisonConstraints;
+	private int number;
 	
 	
 	public ConstraintParser(CrySLRule rule) {
@@ -30,6 +31,7 @@ public class ConstraintParser {
 		this.comparisonConstraints = new ArrayList<CrySLComparisonConstraint>();
 		
 		this.parseConstraints(rule);
+		this.number = this.arithmeticConstraints.size() + this.comparisonConstraints.size() + this.normalConstraints.size() + this.valueConstraints.size();
 	}
 	
 	/**
@@ -51,6 +53,41 @@ public class ConstraintParser {
 		}
 	}
 	
+	public void extractAlgos(CrySLConstraint cons) {
+		if(cons.getLeft() instanceof CrySLValueConstraint) {
+			System.out.println(((CrySLValueConstraint) cons.getLeft()).getValueRange());
+		} else if(cons.getLeft() instanceof CrySLConstraint) {
+			extractAlgos((CrySLConstraint) cons.getLeft());
+		}
+		if(cons.getRight() instanceof CrySLValueConstraint) {
+			System.out.println(((CrySLValueConstraint) cons.getRight()).getValueRange());
+		} else if(cons.getRight() instanceof CrySLConstraint) {
+			extractAlgos((CrySLConstraint) cons.getRight());
+		}
+	}
+	
+	public void extractClasses(CrySLConstraint cons) {
+		if(!(cons.getLeft() instanceof CrySLConstraint)) {
+			System.out.println(cons.getLeft().getClass());
+		} else if(cons.getLeft() instanceof CrySLConstraint) {
+			extractClasses((CrySLConstraint) cons.getLeft());
+		}
+		System.out.println(cons.getOperator());
+		if(!(cons.getRight() instanceof CrySLConstraint)) {
+			System.out.println(cons.getRight().getClass());
+		} else if(cons.getRight() instanceof CrySLConstraint) {
+			extractClasses((CrySLConstraint) cons.getRight());
+		}
+	}
+
+	public ArrayList<ArrayList<String>> extractAlgorithms() {
+		ArrayList<ArrayList<String>> algos = new ArrayList<ArrayList<String>>();
+		for (CrySLValueConstraint valCon : this.valueConstraints) {
+			algos.add((ArrayList<String>) valCon.getValueRange());
+		}
+		return algos;
+	}
+	
 	public ArrayList<CrySLConstraint> getNormalConstraints() {
 		return normalConstraints;
 	}
@@ -65,5 +102,9 @@ public class ConstraintParser {
 
 	public ArrayList<CrySLComparisonConstraint> getComparisonConstraints() {
 		return comparisonConstraints;
+	}
+	
+	public int getNumber() {
+		return this.number;
 	}
 }
