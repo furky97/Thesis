@@ -2,6 +2,7 @@ package thesis.main;
 
 import java.util.ArrayList;
 
+import crypto.interfaces.ISLConstraint;
 import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLRule;
 import thesis.helpers.Counter;
@@ -27,10 +28,10 @@ public class Main {
 		System.out.println("Average Parameter/Method: " + c.paramPerMethod());
 		System.out.println();
 		
-		for (CrySLConstraint cons: c.getConstraintParser().getNormalConstraints().subList(0,1)) {
-			System.out.println(cons);
-			c.getConstraintParser().extractClasses(cons);
-			System.out.println("======================================");
+		
+		for (int i=0; i<c.getConstraintParser().getNumber(); i++) {
+			System.out.print(c.getConstraintParser().getConstraintComponents().get(i));
+			System.out.println(c.getConstraintParser().getOperators().get(i));
 		}
 		
 		

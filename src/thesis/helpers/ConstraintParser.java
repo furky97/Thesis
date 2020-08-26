@@ -2,6 +2,8 @@ package thesis.helpers;
 
 import java.util.ArrayList;
 
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import crypto.interfaces.ISLConstraint;
 import crypto.rules.CrySLArithmeticConstraint;
 import crypto.rules.CrySLComparisonConstraint;
@@ -21,6 +23,8 @@ public class ConstraintParser {
 	private ArrayList<CrySLArithmeticConstraint> arithmeticConstraints;
 	private ArrayList<CrySLValueConstraint> valueConstraints;
 	private ArrayList<CrySLComparisonConstraint> comparisonConstraints;
+	private ArrayList<ArrayList<ISLConstraint>> constraintComponents;
+	private ArrayList<ArrayList<String>> operators;
 	private int number;
 	
 	
@@ -31,9 +35,32 @@ public class ConstraintParser {
 		this.comparisonConstraints = new ArrayList<CrySLComparisonConstraint>();
 		
 		this.parseConstraints(rule);
-		this.number = this.arithmeticConstraints.size() + this.comparisonConstraints.size() + this.normalConstraints.size() + this.valueConstraints.size();
+		this.number = rule.getConstraints().size();
+		this.constraintComponents = createEmptyComponentList();
+		this.operators = createEmptyOpsList();
+		this.fillCryslComponents();
 	}
 	
+	public ArrayList<ArrayList<ISLConstraint>> getConstraintComponents() {
+		return constraintComponents;
+	}
+
+	private ArrayList<ArrayList<ISLConstraint>> createEmptyComponentList() {
+		ArrayList<ArrayList<ISLConstraint>> res = new ArrayList<ArrayList<ISLConstraint>>(this.number);
+		for (int i = 0; i < this.number; i++) {
+			res.add(new ArrayList<ISLConstraint>());
+		}
+		return res;
+	}
+
+	private ArrayList<ArrayList<String>> createEmptyOpsList() {
+		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>(this.number);
+		for (int i = 0; i < this.number; i++) {
+			res.add(new ArrayList<String>());
+		}
+		return res;
+	}
+
 	/**
 	 * parses constraints of any given type and fills respective lists
 	 * 
@@ -53,39 +80,31 @@ public class ConstraintParser {
 		}
 	}
 	
-	public void extractAlgos(CrySLConstraint cons) {
-		if(cons.getLeft() instanceof CrySLValueConstraint) {
-			System.out.println(((CrySLValueConstraint) cons.getLeft()).getValueRange());
-		} else if(cons.getLeft() instanceof CrySLConstraint) {
-			extractAlgos((CrySLConstraint) cons.getLeft());
+	
+	public void fillCryslComponents() {
+		for (int i = 0; i < this.getNormalConstraints().size(); i++) {
+			CrySLConstraint cons = this.getNormalConstraints().get(i);
+			extractClasses(cons, this.getConstraintComponents(), this.operators, i);
 		}
-		if(cons.getRight() instanceof CrySLValueConstraint) {
-			System.out.println(((CrySLValueConstraint) cons.getRight()).getValueRange());
-		} else if(cons.getRight() instanceof CrySLConstraint) {
-			extractAlgos((CrySLConstraint) cons.getRight());
-		}
+		
 	}
 	
-	public void extractClasses(CrySLConstraint cons) {
+	/**
+	 * analyzes CrySLConstraint recursively, finds nested classes
+	 * @param cons
+	 */
+	public void extractClasses(CrySLConstraint cons, ArrayList<ArrayList<ISLConstraint>> consList, ArrayList<ArrayList<String>> ops, int i) {
 		if(!(cons.getLeft() instanceof CrySLConstraint)) {
-			System.out.println(cons.getLeft().getClass());
+			consList.get(i).add(cons.getLeft());
 		} else if(cons.getLeft() instanceof CrySLConstraint) {
-			extractClasses((CrySLConstraint) cons.getLeft());
+			extractClasses((CrySLConstraint) cons.getLeft(), consList, ops, i);
 		}
-		System.out.println(cons.getOperator());
+		ops.get(i).add(cons.getOperator().toString());
 		if(!(cons.getRight() instanceof CrySLConstraint)) {
-			System.out.println(cons.getRight().getClass());
+			consList.get(i).add(cons.getRight());
 		} else if(cons.getRight() instanceof CrySLConstraint) {
-			extractClasses((CrySLConstraint) cons.getRight());
+			extractClasses((CrySLConstraint) cons.getRight(), consList, ops, i);
 		}
-	}
-
-	public ArrayList<ArrayList<String>> extractAlgorithms() {
-		ArrayList<ArrayList<String>> algos = new ArrayList<ArrayList<String>>();
-		for (CrySLValueConstraint valCon : this.valueConstraints) {
-			algos.add((ArrayList<String>) valCon.getValueRange());
-		}
-		return algos;
 	}
 	
 	public ArrayList<CrySLConstraint> getNormalConstraints() {
@@ -106,5 +125,9 @@ public class ConstraintParser {
 	
 	public int getNumber() {
 		return this.number;
+	}
+
+	public ArrayList<ArrayList<String>> getOperators() {
+		return this.operators;
 	}
 }

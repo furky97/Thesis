@@ -127,6 +127,8 @@ public class Counter {
 		return forbiddenMethods;
 	}
 	
+	
+	
 	public ConstraintParser getConstraintParser() {
 		return this.constraintParser;
 	}
