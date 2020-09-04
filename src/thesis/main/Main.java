@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import crypto.interfaces.ISLConstraint;
 import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLRule;
-import thesis.helpers.Counter;
+import thesis.helpers.MetricsGenerator;
 import thesis.helpers.RuleReader;
 
 
@@ -17,7 +17,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_1 + "/tmp");
 		CrySLRule rule = rules.get(0);
-		Counter c = new Counter(rule);
+		MetricsGenerator c = new MetricsGenerator(rule);
 		
 //		System.out.println("Amount of Rules for BouncyCastle-JCA: " + c.getRules().size());
 //		System.out.println(c.getOccurences());

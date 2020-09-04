@@ -23,7 +23,7 @@ import de.darmstadt.tu.crossing.validation.CrySLValidator;
  * @author furkan
  *
  */
-public class Counter {
+public class MetricsGenerator {
 
 	private CrySLRule rule;
 	private ArrayList<Integer> numberOfParameters;
@@ -40,7 +40,7 @@ public class Counter {
 	 * @throws MalformedURLException
 	 * @throws CoreException
 	 */
-	public Counter(CrySLRule rule) throws MalformedURLException, CoreException {
+	public MetricsGenerator(CrySLRule rule) throws MalformedURLException, CoreException {
 		this.rule = rule;
 		this.constraintParser = new ConstraintParser(rule);
 		this.parseMethods();
