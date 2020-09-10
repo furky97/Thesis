@@ -25,14 +25,16 @@ public class Main {
 		System.out.println("Number of total Methods: " + c.getNumberOfMethods());
 		System.out.println("Number of total Constraints: " + c.getConstraintParser().getNumber());
 		System.out.println("Number of total Parameters: " + c.getNumberOfParameters());
-		System.out.println("Average Parameter/Method: " + c.paramPerMethod());
+		System.out.println("Average PPM (APPM): " + c.getAPPM());
+		System.out.println("Methods PPM (APPM): " + c.getMethods());
+		System.out.println(c.getRAO());
 		System.out.println();
 		
 		
-		for (int i=0; i<c.getConstraintParser().getNumber(); i++) {
-			System.out.print(c.getConstraintParser().getConstraintComponents().get(i));
-			System.out.println(c.getConstraintParser().getOperators().get(i));
-		}
+//		for (int i=0; i<c.getConstraintParser().getNumber(); i++) {
+//			System.out.print(c.getConstraintParser().getConstraintComponents().get(i));
+//			System.out.println(c.getConstraintParser().getOperators().get(i));
+//		}
 		
 		
 		

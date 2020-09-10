@@ -7,16 +7,11 @@ import java.util.HashSet;
 
 import org.eclipse.core.runtime.CoreException;
 
-import crypto.interfaces.ISLConstraint;
-import crypto.rules.CrySLArithmeticConstraint;
-import crypto.rules.CrySLComparisonConstraint;
-import crypto.rules.CrySLConstraint;
 import crypto.rules.CrySLForbiddenMethod;
 import crypto.rules.CrySLMethod;
 import crypto.rules.CrySLRule;
-import crypto.rules.CrySLValueConstraint;
+import crypto.rules.StateNode;
 import crypto.rules.TransitionEdge;
-import de.darmstadt.tu.crossing.validation.CrySLValidator;
 
 /**
  * 
@@ -97,6 +92,16 @@ public class MetricsGenerator {
 		}
 		this.methods = set;
 	}
+	
+	/*
+	 * returns Ratio of Accepted Orders (RAO)
+	 */
+	public double getRAO() {
+		int iAll = rule.getUsagePattern().getNodes().size();
+		int iAcc = rule.getUsagePattern().getAcceptingStates().size();
+		return (double) iAcc/iAll;
+	}
+	
 
 
 	/**
@@ -119,7 +124,7 @@ public class MetricsGenerator {
 		return this.methods.size();
 	}
 
-	public int paramPerMethod() {
+	public int getAPPM() {
 		return this.numberOfParameters.stream().mapToInt(Integer::intValue).sum() / this.numberOfParameters.size();
 	}
 
