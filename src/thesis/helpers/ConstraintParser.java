@@ -26,9 +26,11 @@ public class ConstraintParser {
 	private ArrayList<ArrayList<ISLConstraint>> constraintComponents;
 	private ArrayList<ArrayList<String>> operators;
 	private int number;
+	private CrySLRule rule;
 	
 	
 	public ConstraintParser(CrySLRule rule) {
+		this.rule = rule;
 		this.normalConstraints = new ArrayList<CrySLConstraint>();
 		this.arithmeticConstraints = new ArrayList<CrySLArithmeticConstraint>();
 		this.valueConstraints = new ArrayList<CrySLValueConstraint>();

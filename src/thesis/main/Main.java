@@ -20,21 +20,21 @@ public class Main {
 		MetricsGenerator c = new MetricsGenerator(rule);
 		
 //		System.out.println("Amount of Rules for BouncyCastle-JCA: " + c.getRules().size());
-//		System.out.println(c.getOccurences());
 		
-		System.out.println("Number of total Methods: " + c.getNumberOfMethods());
-		System.out.println("Number of total Constraints: " + c.getConstraintParser().getNumber());
-		System.out.println("Number of total Parameters: " + c.getNumberOfParameters());
+//		System.out.println("Number of total Methods: " + c.getNumberOfMethods());
+//		System.out.println("Number of total Constraints: " + c.getConstraintParser().getNumber());
+		System.out.println("Average EPS (AEPS): " + c.getAEPS());
 		System.out.println("Average PPM (APPM): " + c.getAPPM());
-		System.out.println("Methods PPM (APPM): " + c.getMethods());
-		System.out.println(c.getRAO());
-		System.out.println();
+		System.out.println("Ratio Accepted Orders (RAO): "+ c.getRAO());
+//		System.out.println(c.getRule().getForbiddenMethods());
+//		System.out.println(c.getRule().getRequiredPredicates());
+//		System.out.println(c.getRule().getPredicates());
 		
 		
-//		for (int i=0; i<c.getConstraintParser().getNumber(); i++) {
-//			System.out.print(c.getConstraintParser().getConstraintComponents().get(i));
-//			System.out.println(c.getConstraintParser().getOperators().get(i));
-//		}
+		for (int i=0; i<c.getConstraintParser().getNumber(); i++) {
+			System.out.print(c.getConstraintParser().getConstraintComponents().get(i));
+			System.out.println(c.getConstraintParser().getOperators().get(i));
+		}
 		
 		
 		

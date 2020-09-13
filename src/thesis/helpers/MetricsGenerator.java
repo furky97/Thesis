@@ -24,6 +24,7 @@ public class MetricsGenerator {
 	private ArrayList<Integer> numberOfParameters;
 	private HashSet<CrySLMethod> methods;
 	private ConstraintParser constraintParser;
+	private int AEPS;
 
 
 	private ArrayList<CrySLForbiddenMethod> forbiddenMethods;
@@ -41,32 +42,6 @@ public class MetricsGenerator {
 		this.parseMethods();
 		this.parseNumberOfParameters();
 		this.parseForbiddenMethods();
-	}
-
-	/**
-	 * counts amounts of rules for each case
-	 * 
-	 * @return HashMap
-	 */
-	public HashMap<String, Integer> getOccurences() {
-		int o, c, f, p, r, u;
-		o = c = f = r = p = u = 0;
-
-		o += rule.getObjects().size();
-		c += rule.getConstraints().size();
-		f += rule.getForbiddenMethods().size();
-		p += rule.getPredicates().size();
-		r += rule.getRequiredPredicates().size();
-		u += rule.getUsagePattern().getNodes().size();
-
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("Objects", o);
-		map.put("Constraints", c);
-		map.put("ForbiddenMethods", f);
-		map.put("Predicates", p);
-		map.put("Required", r);
-		map.put("UsagePatterns", u);
-		return map;
 	}
 
 	/*
@@ -132,8 +107,15 @@ public class MetricsGenerator {
 		return forbiddenMethods;
 	}
 	
+	public int getAEPS() {
+		AEPS = (rule.getObjects().size() + rule.getConstraints().size() + rule.getForbiddenMethods().size()+rule.getPredicates().size()+rule.getRequiredPredicates().size() +rule.getUsagePattern().getNodes().size())/6;
+		return AEPS;
+	}
 	
-	
+	public CrySLRule getRule() {
+		return rule;
+	}
+
 	public ConstraintParser getConstraintParser() {
 		return this.constraintParser;
 	}
