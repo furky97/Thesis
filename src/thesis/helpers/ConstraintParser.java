@@ -1,8 +1,9 @@
 package thesis.helpers;
 
 import java.util.ArrayList;
-
-import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import crypto.interfaces.ISLConstraint;
 import crypto.rules.CrySLArithmeticConstraint;
@@ -18,31 +19,33 @@ import crypto.rules.CrySLValueConstraint;
  */
 public class ConstraintParser {
 
-	
 	private ArrayList<CrySLConstraint> normalConstraints;
 	private ArrayList<CrySLArithmeticConstraint> arithmeticConstraints;
 	private ArrayList<CrySLValueConstraint> valueConstraints;
 	private ArrayList<CrySLComparisonConstraint> comparisonConstraints;
 	private ArrayList<ArrayList<ISLConstraint>> constraintComponents;
 	private ArrayList<ArrayList<String>> operators;
+	private ArrayList<String> algos;
+	private List<String> noAlgos;
 	private int number;
 	private CrySLRule rule;
-	
-	
+
 	public ConstraintParser(CrySLRule rule) {
 		this.rule = rule;
 		this.normalConstraints = new ArrayList<CrySLConstraint>();
 		this.arithmeticConstraints = new ArrayList<CrySLArithmeticConstraint>();
 		this.valueConstraints = new ArrayList<CrySLValueConstraint>();
 		this.comparisonConstraints = new ArrayList<CrySLComparisonConstraint>();
-		
+		this.algos = new ArrayList<String>();
+		this.noAlgos = Arrays.asList(new String[]{"0","1","2","3","4","5","6","7","8","9", "CBC", "CTR", "CTS", "CFB", "OFB", "CCM", "GCM", "ECB"});
+
 		this.parseConstraints(rule);
 		this.number = rule.getConstraints().size();
 		this.constraintComponents = createEmptyComponentList();
 		this.operators = createEmptyOpsList();
 		this.fillCryslComponents();
 	}
-	
+
 	public ArrayList<ArrayList<ISLConstraint>> getConstraintComponents() {
 		return constraintComponents;
 	}
@@ -81,34 +84,53 @@ public class ConstraintParser {
 			}
 		}
 	}
-	
-	
+
 	public void fillCryslComponents() {
 		for (int i = 0; i < this.getNormalConstraints().size(); i++) {
 			CrySLConstraint cons = this.getNormalConstraints().get(i);
 			extractClasses(cons, this.getConstraintComponents(), this.operators, i);
 		}
-		
+		for (ArrayList<ISLConstraint> islList : this.getConstraintComponents()) {
+			for (ISLConstraint isl : islList) {
+				if (isl instanceof CrySLValueConstraint)
+					this.algos.addAll(((CrySLValueConstraint) isl).getValueRange());
+			}
+		}
+		this.algos = filterAlgos(noAlgos);
 	}
-	
+
 	/**
 	 * analyzes CrySLConstraint recursively, finds nested classes
+	 * 
 	 * @param cons
 	 */
-	public void extractClasses(CrySLConstraint cons, ArrayList<ArrayList<ISLConstraint>> consList, ArrayList<ArrayList<String>> ops, int i) {
-		if(!(cons.getLeft() instanceof CrySLConstraint)) {
+	public void extractClasses(CrySLConstraint cons, ArrayList<ArrayList<ISLConstraint>> consList,
+			ArrayList<ArrayList<String>> ops, int i) {
+		if (!(cons.getLeft() instanceof CrySLConstraint)) {
 			consList.get(i).add(cons.getLeft());
-		} else if(cons.getLeft() instanceof CrySLConstraint) {
+		} else if (cons.getLeft() instanceof CrySLConstraint) {
 			extractClasses((CrySLConstraint) cons.getLeft(), consList, ops, i);
 		}
 		ops.get(i).add(cons.getOperator().toString());
-		if(!(cons.getRight() instanceof CrySLConstraint)) {
+		if (!(cons.getRight() instanceof CrySLConstraint)) {
 			consList.get(i).add(cons.getRight());
-		} else if(cons.getRight() instanceof CrySLConstraint) {
+		} else if (cons.getRight() instanceof CrySLConstraint) {
 			extractClasses((CrySLConstraint) cons.getRight(), consList, ops, i);
 		}
 	}
 	
+	public ArrayList<String> filterAlgos(List<String> noAlgos2) {
+		ArrayList<String> tmp = new ArrayList<String>();
+		for (String string : this.algos) {
+			if (noAlgos2.contains(string) || string.contains("Padding") || string.isEmpty()) 
+				continue;
+			else
+				tmp.add(string);
+		}
+		//remove duplicates and return the filtered list
+		return (ArrayList<String>) tmp.stream().distinct().collect(Collectors.toList());
+	}
+
 	public ArrayList<CrySLConstraint> getNormalConstraints() {
 		return normalConstraints;
 	}
@@ -124,9 +146,13 @@ public class ConstraintParser {
 	public ArrayList<CrySLComparisonConstraint> getComparisonConstraints() {
 		return comparisonConstraints;
 	}
-	
+
 	public int getNumber() {
 		return this.number;
+	}
+
+	public ArrayList<String> getAlgos() {
+		return this.algos;
 	}
 
 	public ArrayList<ArrayList<String>> getOperators() {
