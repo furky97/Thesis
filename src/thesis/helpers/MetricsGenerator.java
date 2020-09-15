@@ -2,7 +2,6 @@ package thesis.helpers;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import org.eclipse.core.runtime.CoreException;
@@ -10,7 +9,6 @@ import org.eclipse.core.runtime.CoreException;
 import crypto.rules.CrySLForbiddenMethod;
 import crypto.rules.CrySLMethod;
 import crypto.rules.CrySLRule;
-import crypto.rules.StateNode;
 import crypto.rules.TransitionEdge;
 
 /**
@@ -24,8 +22,8 @@ public class MetricsGenerator {
 	private ArrayList<Integer> numberOfParameters;
 	private HashSet<CrySLMethod> methods;
 	private ConstraintParser constraintParser;
+	private CryptoSecurityLevel casl;
 	private int AEPS;
-
 
 	private ArrayList<CrySLForbiddenMethod> forbiddenMethods;
 
@@ -42,6 +40,7 @@ public class MetricsGenerator {
 		this.parseMethods();
 		this.parseNumberOfParameters();
 		this.parseForbiddenMethods();
+		this.casl = new CryptoSecurityLevel(constraintParser.getAlgos());
 	}
 
 	/*
@@ -67,17 +66,15 @@ public class MetricsGenerator {
 		}
 		this.methods = set;
 	}
-	
+
 	/*
 	 * returns Ratio of Accepted Orders (RAO)
 	 */
 	public double getRAO() {
 		int iAll = rule.getUsagePattern().getNodes().size();
 		int iAcc = rule.getUsagePattern().getAcceptingStates().size();
-		return (double) iAcc/iAll;
+		return (double) iAcc / iAll;
 	}
-	
-
 
 	/**
 	 * parse Forbidden Methods
@@ -89,6 +86,10 @@ public class MetricsGenerator {
 	// GETTERS
 	public HashSet<CrySLMethod> getMethods() {
 		return this.methods;
+	}
+
+	public int getCASL() {
+		return this.casl.getCASL();
 	}
 
 	public ArrayList<Integer> getNumberOfParameters() {
@@ -106,12 +107,14 @@ public class MetricsGenerator {
 	public ArrayList<CrySLForbiddenMethod> getForbiddenMethods() {
 		return forbiddenMethods;
 	}
-	
+
 	public int getAEPS() {
-		AEPS = (rule.getObjects().size() + rule.getConstraints().size() + rule.getForbiddenMethods().size()+rule.getPredicates().size()+rule.getRequiredPredicates().size() +rule.getUsagePattern().getNodes().size())/6;
+		AEPS = (rule.getObjects().size() + rule.getConstraints().size() + rule.getForbiddenMethods().size()
+				+ rule.getPredicates().size() + rule.getRequiredPredicates().size()
+				+ rule.getUsagePattern().getNodes().size()) / 6;
 		return AEPS;
 	}
-	
+
 	public CrySLRule getRule() {
 		return rule;
 	}

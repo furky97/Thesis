@@ -1,20 +1,21 @@
 package thesis.helpers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CryptoSecurityLevel {
-	
-	
+
 	private HashMap<String, Integer> assignments;
 	private HashMap<Integer, String> ref;
-	
-	
+	private ArrayList<String> algos;
+
 	/**
 	 * Constructor
 	 */
-	public CryptoSecurityLevel() {
+	public CryptoSecurityLevel(ArrayList<String> algos) {
 		this.assignments = new HashMap<String, Integer>();
 		this.ref = new HashMap<Integer, String>();
+		this.algos = algos;
 		assignValues();
 	}
 
@@ -46,18 +47,34 @@ public class CryptoSecurityLevel {
 		this.assignments.put("SHA-1", 2);
 		this.assignments.put("SHA-2", 4);
 		this.assignments.put("SHA-3", 4);
-		
+
 		this.ref.put(1, "VW (Very Weak)");
 		this.ref.put(2, "W (Weak)");
 		this.ref.put(3, "CCS (Conditionally Computationally Secure)");
 		this.ref.put(4, "CS (Computationally Secure)");
 		this.ref.put(5, "US (Unconditionally Secure)");
-		
-		
+
 	}
 
-	
-	//GETTERS and SETTERS
+	public int getCASL() {
+		// init with non existing value
+		int casl = 6;
+		for (String algo : this.algos) {
+			if (this.assignments.get(algo) != null && this.assignments.get(algo) < casl)
+				casl = this.assignments.get(algo);
+		}
+		return casl;
+	}
+
+	public ArrayList<String> getAlgos() {
+		return algos;
+	}
+
+	public void setAlgos(ArrayList<String> algos) {
+		this.algos = algos;
+	}
+
+	// GETTERS and SETTERS
 	public HashMap<String, Integer> getAssignments() {
 		return assignments;
 	}
@@ -73,8 +90,5 @@ public class CryptoSecurityLevel {
 	public void setRef(HashMap<Integer, String> ref) {
 		this.ref = ref;
 	}
-	
-	
-	
-	
+
 }

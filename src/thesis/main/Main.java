@@ -20,12 +20,11 @@ public class Main {
 		CrySLRule rule = rules.get(0);
 		MetricsGenerator c = new MetricsGenerator(rule);
 		
-		System.out.println("Average EPS (AEPS): " + c.getAEPS());
-		System.out.println("Average PPM (APPM): " + c.getAPPM());
-		System.out.println("Ratio Accepted Orders (RAO): "+ c.getRAO());
-		
-		
-		System.out.println(c.getConstraintParser().getAlgos());
+		System.out.println(rule.getClassName());
+		System.out.println("\tAverage EPS (AEPS): " + c.getAEPS());
+		System.out.println("\tAverage PPM (APPM): " + c.getAPPM());
+		System.out.println("\tRatio Accepted Orders (RAO): "+ c.getRAO());
+		System.out.println("\tCryptographic Security Level (CASL): " + c.getCASL());
 		
 		
 		
