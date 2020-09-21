@@ -58,10 +58,13 @@ public class CryptoSecurityLevel {
 
 	public int getCASL() {
 		// init with non existing value
-		int casl = 6;
+		int casl = 5;
 		for (String algo : this.algos) {
 			if (this.assignments.get(algo) != null && this.assignments.get(algo) < casl)
 				casl = this.assignments.get(algo);
+		}
+		if(casl==6) {
+			return 0;
 		}
 		return casl;
 	}

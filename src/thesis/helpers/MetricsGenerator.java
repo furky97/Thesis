@@ -23,7 +23,7 @@ public class MetricsGenerator {
 	private HashSet<CrySLMethod> methods;
 	private ConstraintParser constraintParser;
 	private CryptoSecurityLevel casl;
-	private int AEPS;
+	private int AEPS, AEPR;
 
 	private ArrayList<CrySLForbiddenMethod> forbiddenMethods;
 
@@ -113,6 +113,13 @@ public class MetricsGenerator {
 				+ rule.getPredicates().size() + rule.getRequiredPredicates().size()
 				+ rule.getUsagePattern().getNodes().size()) / 6;
 		return AEPS;
+	}
+	
+	public int getAEPR() {
+		AEPR = rule.getObjects().size() + rule.getConstraints().size() + rule.getForbiddenMethods().size()
+				+ rule.getPredicates().size() + rule.getRequiredPredicates().size()
+				+ rule.getUsagePattern().getNodes().size();
+		return AEPR;
 	}
 
 	public CrySLRule getRule() {
