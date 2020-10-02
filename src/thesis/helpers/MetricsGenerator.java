@@ -108,11 +108,23 @@ public class MetricsGenerator {
 		return forbiddenMethods;
 	}
 
+	/**
+	 * calculate AEPS
+	 * count if elements exist within that section
+	 * @return
+	 */
 	public int getAEPS() {
+		int div = 0;
 		AEPS = (rule.getObjects().size() + rule.getConstraints().size() + rule.getForbiddenMethods().size()
 				+ rule.getPredicates().size() + rule.getRequiredPredicates().size()
-				+ rule.getUsagePattern().getNodes().size()) / 6;
-		return AEPS;
+				+ rule.getUsagePattern().getNodes().size());
+		if(rule.getObjects().size()!=0) div+=1;
+		if(rule.getConstraints().size()!=0) div+=1;
+		if(rule.getForbiddenMethods().size()!=0) div+=1;
+		if(rule.getUsagePattern().getNodes().size()!=0) div+=1;
+		if(rule.getPredicates().size()!=0) div+=1;
+		if(rule.getRequiredPredicates().size()!=0) div+=1;
+		return AEPS/div;
 	}
 	
 	public int getAEPR() {

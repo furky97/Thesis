@@ -19,7 +19,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_1);
+		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_3);
 		ArrayList<AverageMetricGenerator> ags = new ArrayList<AverageMetricGenerator>();
 		ags.add(new AverageMetricGenerator(CRYPTO_API_1));
 		ags.add(new AverageMetricGenerator(CRYPTO_API_2));
@@ -34,30 +34,18 @@ public class Main {
 			System.out.println();
 		}
 		
-	
-		
-		
-		
 		/*
-//		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_1 + "/tmp");
-//		CrySLRule rule = rules.get(0);
 		PrintWriter writer =  new PrintWriter("test.txt", "UTF-8");
 		for (CrySLRule rule : rules) {
 			
 			MetricsGenerator c = new MetricsGenerator(rule);
 			System.out.println(rule.getClassName());
 //			writer.println(c.getAEPR());
-			writer.println(c.getRAO());
-//			System.out.println("\tAverage PPM (APPM): " + c.getAPPM());
-//			System.out.println("\tRatio Accepted Orders (RAO): "+ c.getRAO());
-//			System.out.println("\tCryptographic Security Level (CASL): " + c.getCASL());
-			
+			writer.println(c.getCASL());
 		}
 		writer.close();
 		*/
-		
-		
-		
+	
 		
 	}
 
