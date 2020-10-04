@@ -32,6 +32,7 @@ public class Main {
 			System.out.println("ACASL: " + ag.getACASL());
 			System.out.println("ARAO: " + ag.getARAO());
 			System.out.println("ANFM: " + ag.getANFM());
+			System.out.println("AEPS Constraints: " + ag.getAEPSCons());
 			System.out.println();
 		}
 		

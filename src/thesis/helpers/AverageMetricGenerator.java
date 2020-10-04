@@ -11,13 +11,18 @@ public class AverageMetricGenerator {
 	
 	private ArrayList<CrySLRule> rules;
 	private ArrayList<MetricsGenerator> metricsGenerators;
-	private double AAEPS, AAEPR, AAPPM, ARAO;
+	private double AAEPS, AAEPR, AAPPM, ARAO, AEPSCons;
 	private int ACASL, ANFM;
 	
 	public AverageMetricGenerator(String path) throws MalformedURLException, CoreException {
 		this.rules = (ArrayList<CrySLRule>) new RuleReader().readRules(path);
 		this.metricsGenerators = new ArrayList<MetricsGenerator>();
-		this.AAEPR = this.AAEPS = this.AAPPM = this.ARAO = this.ANFM = 0;
+		this.AAEPR = 0;
+		this.AAEPS = 0;
+		this.AAPPM = 0;
+		this.ARAO = 0;
+		this.AEPSCons = 0;
+		this.ANFM = 0;
 		this.ACASL = 5;
 		this.createMetricsGenerators();
 		this.createMetrics();
@@ -43,12 +48,18 @@ public class AverageMetricGenerator {
 			this.AAPPM += mg.getAPPM();
 			this.ARAO += mg.getRAO();
 			this.ANFM += mg.getNFM();
+			this.AEPSCons += mg.getConstraintParser().getNumber();
 			this.ACASL = Math.min(this.ACASL, mg.getCASL());
 		}
 		this.AAEPR = this.AAEPR / this.rules.size();
 		this.AAPPM = this.AAPPM / this.rules.size();
 		this.AAEPS = this.AAEPS / this.rules.size();
 		this.ARAO = this.ARAO / this.rules.size();
+		this.AEPSCons = this.AEPSCons / this.rules.size();
+	}
+	
+	public double getAEPSCons() {
+		return this.AEPSCons;
 	}
 	
 	public double getAAEPS() {
