@@ -1,15 +1,9 @@
 package thesis.main;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import crypto.interfaces.ISLConstraint;
-import crypto.rules.CrySLConstraint;
-import crypto.rules.CrySLRule;
-import crypto.rules.CrySLValueConstraint;
 import thesis.helpers.AverageMetricGenerator;
-import thesis.helpers.MetricsGenerator;
-import thesis.helpers.RuleReader;
+import thesis.helpers.ResultGenerator;
 
 
 public class Main {
@@ -19,22 +13,24 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_3);
+//		ArrayList<CrySLRule> rules = (ArrayList<CrySLRule>) new RuleReader().readRules(CRYPTO_API_3);
 		ArrayList<AverageMetricGenerator> ags = new ArrayList<AverageMetricGenerator>();
 		ags.add(new AverageMetricGenerator(CRYPTO_API_1));
 		ags.add(new AverageMetricGenerator(CRYPTO_API_2));
 		ags.add(new AverageMetricGenerator(CRYPTO_API_3));
 		
-		for (AverageMetricGenerator ag : ags) {
-			System.out.println("AAPPM: " + ag.getAAPPM());
-			System.out.println("AAEPR: " + ag.getAAEPR());
-			System.out.println("AAEPS: " + ag.getAAEPS());
-			System.out.println("ACASL: " + ag.getACASL());
-			System.out.println("ARAO: " + ag.getARAO());
-			System.out.println("ANFM: " + ag.getANFM());
-			System.out.println("AEPS Constraints: " + ag.getAEPSCons());
-			System.out.println();
-		}
+//		for (AverageMetricGenerator ag : ags) {
+//			System.out.println("AAPPM: " + ag.getAAPPM());
+//			System.out.println("AAEPR: " + ag.getAAEPR());
+//			System.out.println("AAEPS: " + ag.getAAEPS());
+//			System.out.println("ACASL: " + ag.getACASL());
+//			System.out.println("ARAO: " + ag.getARAO());
+//			System.out.println("ANFM: " + ag.getANFM());
+//			System.out.println("AEPS Constraints: " + ag.getAEPSCons());
+//			System.out.println();
+//		}
+		ResultGenerator rg = new ResultGenerator(ags);
+		System.out.println(rg);
 		
 		/*
 		PrintWriter writer =  new PrintWriter("test.txt", "UTF-8");
