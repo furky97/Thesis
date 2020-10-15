@@ -3,7 +3,6 @@ package thesis.helpers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class ResultGenerator {
 
@@ -83,12 +82,11 @@ public class ResultGenerator {
 				this.rating.put(k, this.rating.get(k) + 1);
 			}
 		}
-		System.out.println(rating);
 	}
-	
+
 	public String toString() {
 		String s = "";
-		for (Integer i: this.rating.keySet()) {
+		for (Integer i : this.rating.keySet()) {
 			s += "The library rule set with index: " + i + " has " + this.rating.get(i) + " wins.\n";
 		}
 		return s;
